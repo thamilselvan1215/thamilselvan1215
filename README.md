@@ -255,5 +255,39 @@ fun_fact: "I train models by day and debug them by night 🌙"
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:24243e,50:302b63,100:0f0c29&height=120&section=footer"/>
 
 <div align="center">
+
+
+
+  name: Generate Snake Animation
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # runs every 6 hours
+  workflow_dispatch:         # allows manual trigger from the Actions tab
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate snake animation
+        uses: Platane/snk@v3
+        with:
+          github_user_name: thamilselvan1215
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+
+      - name: Push output to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 <sub>⭐ From <a href="https://github.com/thamilselvan1215">thamilselvan1215</a> — Thanks for stopping by!</sub>
 </div>
